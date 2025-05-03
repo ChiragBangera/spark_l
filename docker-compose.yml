@@ -1,0 +1,17 @@
+
+services:
+  spark_service:
+    build:
+      context: . #Path to docker file
+    volumes:
+      - ./src:/app/src #mounting workspace
+    ports:
+      - "4040:4040"
+      - "7077:7077"
+      - "8080:8080"
+    working_dir: /app/src
+    environment:
+      # - PYTHONPATH=/app/.venv/lib/python3.12/site-packages:/opt/bitnami/spark/python:/opt/bitnami/spark/python/lib/py4j-0.10.9.7-src.zip
+      - PYTHONPATH=/app/.venv/lib/python3.12/site-packages
+
+    tty: true
