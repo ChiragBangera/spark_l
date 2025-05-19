@@ -1,6 +1,7 @@
 import sys
-from pyspark.sql import types as t
+from pyspark.sql import Row, types as t
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, concat, lit
 
 
 schema = t.StructType(
@@ -83,7 +84,20 @@ if __name__ == "__main__":
 
     blogs_df.show()
 
-    print(blogs_df.printSchema())
-    print(blogs_df.schema)
+    blogs_df.select(col("Hits") * 2).show(2)
+
+    blogs_df.withColumn("newCol", col("Hits") > 10000).show()
+
+    # concatenating colums
+    blogs_df.withColumn(
+        "combinedCol", concat(col("First"), lit("_"), col("Last"), lit("_"), col("Id"))
+    ).select(col("combinedCol")).show()
+
+    # sorting by columns
+    blogs_df.sort(col("Id").desc()).show()
+
+    rows = [Row("Matei Zaharia", "CA"), Row("Reynold Xin", "CA")]
+    authors_df = spark.createDataFrame(rows, ["Authors", "State"])
+    authors_df.show()
 
     spark.stop()

@@ -13,5 +13,20 @@ services:
     environment:
       # - PYTHONPATH=/app/.venv/lib/python3.12/site-packages:/opt/bitnami/spark/python:/opt/bitnami/spark/python/lib/py4j-0.10.9.7-src.zip
       - PYTHONPATH=/app/.venv/lib/python3.12/site-packages
-
+    depends_on:
+      - postgres
     tty: true
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: chirag
+      POSTGRES_PASSWORD: chirag
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgres/data
+
+volumes:
+  pg_data:

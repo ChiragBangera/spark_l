@@ -8,7 +8,8 @@ RUN mkdir -p /var/lib/apt/lists/partial && \
     apt-get install -y \
         curl \
         gnupg \
-        ca-certificates
+        ca-certificates \
+        ncurses-bin
 
 
 # Add SBT repo and key, then install
@@ -17,10 +18,11 @@ RUN echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" > /etc/apt/so
     apt-get update && \
     apt-get install -y sbt
 
+RUN curl -o /opt/bitnami/spark/jars/postgresql-42.5.0.jar https://jdbc.postgresql.org/download/postgresql-42.5.0.jar
+
 
 # install uv
 RUN pip install --no-cache-dir uv
-RUN apt-get update && apt-get install -y ncurses-bin
 
 # Set working directory
 WORKDIR /app
