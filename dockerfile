@@ -31,5 +31,5 @@ WORKDIR /app
 COPY pyproject.toml uv.lock /app/
 RUN uv sync
 
-# Default command
-CMD ["spark-shell"]
+# # Default command
+# CMD ["spark-shell"]
