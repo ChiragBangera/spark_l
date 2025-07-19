@@ -11,7 +11,6 @@ services:
       - "8080:8080"
     working_dir: /app/src
     environment:
-      # - PYTHONPATH=/app/.venv/lib/python3.12/site-packages:/opt/bitnami/spark/python:/opt/bitnami/spark/python/lib/py4j-0.10.9.7-src.zip
       - PYTHONPATH=/app/.venv/lib/python3.12/site-packages
     depends_on:
       - postgres
@@ -44,6 +43,9 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
 
 volumes:
   pg_data:
+

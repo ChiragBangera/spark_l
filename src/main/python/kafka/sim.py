@@ -1,9 +1,11 @@
 from faker import Faker
-from kafka import KafkaProducer
+
+# from kafka import KafkaProducer
 from aiokafka import AIOKafkaProducer
 import json
 import random
 import asyncio
+import datetime
 
 fake = Faker()
 
@@ -16,6 +18,8 @@ async def produce_data(producer):
         "name": fake.name_male(),
         "email": fake.email(),
         "address": fake.address(),
+        "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "age": random.randint(10, 80),
     }
 
     await producer.send(topic=TOPIC, value=data)
@@ -32,7 +36,7 @@ async def main():
 
     try:
         while True:
-            total_users = random.randint(5, 25)
+            total_users = random.randint(1, 3)
             tasks = [produce_data(producer=producer) for _ in range(total_users)]
             await asyncio.gather(*tasks)
             await asyncio.sleep(random.uniform(0.5, 2.0))
