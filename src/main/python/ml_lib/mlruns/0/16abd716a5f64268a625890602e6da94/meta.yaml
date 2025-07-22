@@ -1,0 +1,14 @@
+artifact_uri: file:///app/src/main/python/ml_lib/mlruns/0/16abd716a5f64268a625890602e6da94/artifacts
+end_time: 1753206703584
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 16abd716a5f64268a625890602e6da94
+run_name: random-forest
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753206618017
+status: 3
+tags: []
+user_id: root

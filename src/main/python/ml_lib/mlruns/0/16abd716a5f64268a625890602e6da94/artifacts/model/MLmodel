@@ -1,0 +1,58 @@
+artifact_path: model
+flavors:
+  python_function:
+    data: sparkml
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.spark
+    python_version: 3.12.11
+  spark:
+    code: null
+    model_class: pyspark.ml.pipeline.PipelineModel
+    model_data: sparkml
+    pyspark_version: 4.0.0
+is_signature_from_type_hint: false
+mlflow_version: 3.1.3
+model_id: null
+model_size_bytes: 875854
+model_uuid: ba7e8d76ecf042c89c48482b3780dbf6
+prompts: null
+run_id: 16abd716a5f64268a625890602e6da94
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "string", "name": "host_is_superhost", "required": true}, {"type":
+    "string", "name": "cancellation_policy", "required": true}, {"type": "string",
+    "name": "instant_bookable", "required": true}, {"type": "double", "name": "host_total_listings_count",
+    "required": true}, {"type": "string", "name": "neighbourhood_cleansed", "required":
+    true}, {"type": "double", "name": "latitude", "required": true}, {"type": "double",
+    "name": "longitude", "required": true}, {"type": "string", "name": "property_type",
+    "required": true}, {"type": "string", "name": "room_type", "required": true},
+    {"type": "double", "name": "accommodates", "required": true}, {"type": "double",
+    "name": "bathrooms", "required": true}, {"type": "double", "name": "bedrooms",
+    "required": true}, {"type": "double", "name": "beds", "required": true}, {"type":
+    "string", "name": "bed_type", "required": true}, {"type": "double", "name": "minimum_nights",
+    "required": true}, {"type": "double", "name": "number_of_reviews", "required":
+    true}, {"type": "double", "name": "review_scores_rating", "required": true}, {"type":
+    "double", "name": "review_scores_accuracy", "required": true}, {"type": "double",
+    "name": "review_scores_cleanliness", "required": true}, {"type": "double", "name":
+    "review_scores_checkin", "required": true}, {"type": "double", "name": "review_scores_communication",
+    "required": true}, {"type": "double", "name": "review_scores_location", "required":
+    true}, {"type": "double", "name": "review_scores_value", "required": true}, {"type":
+    "double", "name": "price", "required": true}, {"type": "double", "name": "bedrooms_na",
+    "required": true}, {"type": "double", "name": "bathrooms_na", "required": true},
+    {"type": "double", "name": "beds_na", "required": true}, {"type": "double", "name":
+    "review_scores_rating_na", "required": true}, {"type": "double", "name": "review_scores_accuracy_na",
+    "required": true}, {"type": "double", "name": "review_scores_cleanliness_na",
+    "required": true}, {"type": "double", "name": "review_scores_checkin_na", "required":
+    true}, {"type": "double", "name": "review_scores_communication_na", "required":
+    true}, {"type": "double", "name": "review_scores_location_na", "required": true},
+    {"type": "double", "name": "review_scores_value_na", "required": true}]'
+  outputs: null
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-07-22 17:51:23.361184'
