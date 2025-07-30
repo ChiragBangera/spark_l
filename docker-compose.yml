@@ -5,6 +5,8 @@ services:
       context: . #Path to docker file
     volumes:
       - ./src:/app/src #mounting workspace
+      - ./build.sbt:/app/build.sbt
+      - ./hive-site.xml:/opt/bitnami/spark/conf/hive-site.xml
     ports:
       - "4040:4040"
       - "7077:7077"
@@ -19,13 +21,17 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_USER: chirag
-      POSTGRES_PASSWORD: chirag
-      POSTGRES_DB: mydb
+      POSTGRES_USER: hive
+      POSTGRES_PASSWORD: hivepassword
+      POSTGRES_DB: metastore
     ports:
       - "5432:5432"
     volumes:
-      - pg_data:/var/lib/postgres/data
+      - pg_data:/var/lib/postgresql/data
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    command: postgres -c hba_file=/etc/postgresql/pg_hba.conf -c config_file=/etc/postgresql/postgresql.conf
+
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
@@ -45,6 +51,39 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
+
+  hive-metastore:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    platform: linux/amd64
+    volumes:
+      - ./hive-site.xml:/opt/hive/conf/hive-site.xml
+      - ./core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml 
+    environment:
+      - HIVE_METASTORE_USER=hive
+      - HIVE_METASTORE_PASSWORD=hivepassword
+      - HIVE_METASTORE_DB_HOST=postgres
+      - HIVE_METASTORE_DB_NAME=metastore
+    #   - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+    command: /opt/hive/bin/hive --service metastore
+    ports:
+      - "9083:9083"
+    depends_on:
+      - postgres
+
+  hive-init:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    platform: linux/amd64
+    volumes:
+      - ./hive-site.xml:/opt/hive/conf/hive-site.xml
+      - ./core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+    environment:
+      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+    command: /opt/hive/bin/schematool -initSchema -dbType postgres
+    depends_on:
+      - postgres
+    restart: "no"
+
+
 
 volumes:
   pg_data:
